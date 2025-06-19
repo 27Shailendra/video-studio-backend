@@ -68,11 +68,11 @@ export const login = async (req, res) => {
       JWT_SECRET,
       { expiresIn: '1h' }
     );
-
+    
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Lax',
+      secure: true,
+      sameSite: 'None',
       maxAge: 60 * 60 * 1000,
     });
 
