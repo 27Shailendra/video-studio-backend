@@ -6,10 +6,23 @@ import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
-app.use(cors({
-  origin: 'http://localhost:8081',
-  credentials: true,
-}));
+const allowedOrigins = [
+  'http://localhost:8080',
+  'https://video-studio-dashboard-3ol5.vercel.app'
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
